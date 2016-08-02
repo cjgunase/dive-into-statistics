@@ -213,7 +213,7 @@ variable that comes after me".
 
 ```{r extract-counts-of-girls-born}
 # type your code for the Question 2 here, and Knit
-
+arbuthnot$girls
 ```
 
 Notice that the way R has printed these data is different. When we looked at the
@@ -227,8 +227,7 @@ R has some powerful functions for making graphics. We can create a simple plot
 of the number of girls baptized per year with the command
 
 ```{r plot-girls-vs-year}
-ggplot(data = arbuthnot, aes(x = year, y = girls)) +
-  geom_point()
+ggplot(data = arbuthnot, aes(x = year, y = girls)) + geom_point()
 ```
 
 Before we review the code for this plot, let's summarize the trends we see in the 
@@ -249,7 +248,7 @@ of the lower right panel of RStudio. Notice that the command above again looks l
 a function, this time with arguments separated by commas. 
 
 - The first argument is always the dataset. 
-- Next, we provide thevariables from the dataset to be assigned to `aes`thetic 
+- Next, we provide the variables from the dataset to be assigned to `aes`thetic 
 elements of the plot, e.g. the x and the y axes. 
 - Finally, we use another layer, separated by a `+` to specify the `geom`etric 
 object for the plot. Since we want to scatterplot, we use `geom_point`.
@@ -304,6 +303,7 @@ as a permanent column in our data frame.
 ```{r calc-total-bapt-vars-save}
 arbuthnot <- arbuthnot %>%
   mutate(total = boys + girls)
+arbuthnot$test <- arbuthnot$boys + arbuthnot$girls
 ```
 
 What in the world is going on here? The `%>%` operator is called the **piping** 
@@ -358,6 +358,8 @@ do you see?
 
 ```{r plot-proportion-of-boys-over-time}
 # type your code for the Exercise here, and Knit
+arbuthnot$prob <- arbuthnot$boys/arbuthnot$test
+ggplot(data = arbuthnot,aes(x=year,y=prob))+geom_point()+geom_line()
 
 ```
 
@@ -369,6 +371,7 @@ year with the expression
 ```{r boys-more-than-girls}
 arbuthnot <- arbuthnot %>%
   mutate(more_boys = boys > girls)
+arbuthnot$more_boyes <- arbuthnot$boys > arbuthnot$test
 ```
 
 This command add a new variable to the `arbuthnot` data frame containing the values
@@ -408,6 +411,8 @@ your workspace.
 ```{r variables-in-present}
 # type your code for Question 4 here, and Knit
 
+names(present)
+#3
 ```
 
 <div id="exercise">
@@ -417,7 +422,8 @@ function and `present$year` as its argument.
 
 ```{r years-in-present-data}
 # type your code for Exercise here, and Knit
-
+range(present$year)
+#1940 2013
 ```
 
 5. Calculate the total number of births for each year and store these values in a new 
@@ -433,7 +439,10 @@ decreased over time.
 
 ```{r prop-boys-over-time}
 # type your code for Question 5 here, and Knit
-
+present$total <-present$boys+present$girls
+present$prop_boys <-present$boys/present$total
+ggplot(data=present,aes(x=year,y=prop_boys))+geom_point()+geom_line()
+#decreased
 ```
 
 
@@ -448,6 +457,7 @@ variable which of the following statements is true?
 
 ```{r more-boys-per-year}
 # type your code for Question 6 here, and Knit
+present$more_boys<-present$boys>present$girls
 
 ```
 
@@ -463,7 +473,8 @@ variable which of the following statements is true?
 
 ```{r prop-boy-girl-over-time}
 # type your code for Question 7 here, and Knit
-
+present$prop_boy_girl <-present$boys/present$girls
+ggplot(data=present,aes(x=year,y=prop_boy_girl))+geom_line()
 ```
 
 8. In what year did we see the most total number of births in the U.S.? *Hint:* Sort 
@@ -482,9 +493,14 @@ descending order).
 ```{r most-total-births}
 # type your code for Question 8 here
 # sample code is provided below, edit as necessary, uncomment, and then Knit
-#present %>%
-#  mutate(total = ?) %>%
-#  arrange(desc(total))
+# present %>%
+#   mutate(total = ?) %>%
+#   arrange(desc(total))
+#order() function returns indices
+present[c(1:10),c(1,2)]
+present<-present[order(-present$total),]
+
+
 ```
 
 ## Resources for learning R and working in RStudio
