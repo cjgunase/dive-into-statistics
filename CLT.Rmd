@@ -1,0 +1,71 @@
+---
+title: "Central Limit Theorm"
+author: "Chathura"
+date: "October 18, 2016"
+output: html_document
+---
+Central Limit Theorm may be the most important statistical concept. Briefly we can state that for any distribution with *finite mean and standard deviation*, samples taken from that population will tend towards a normal distribution around the mean of the population as sample size increases. Furthermore, as sample size increases, the variation of the sample means will decrease.
+
+Lets see this with an simulation. suppose we have one six sided die. Drawing a sample mean playing the die and observing the outcome. Obviously we will get one value for each time we draw. That means we are taking a sample from (1,2,3,4,5,6) one at a time. Each outcome is equally likely. so if we draw 1000 times seperatly. we can plot a histogram like this.
+```{r}
+numoftimes = 10000
+possibleSides <- 1:6
+x <- as.integer(runif(numoftimes,1,7))
+par(mfrow=c(1,2))
+hist(x,main=paste( numoftimes," roles of a single die"),breaks=seq(1-.5,6+.5,1))
+boxplot(x, horizontal=TRUE,range=1)
+title("boxplot of a uniform random distribution")
+```
+So our population has 6 items. each one is equally likly. Mean and the variance of the population can be calculated as above.
+lets introduce the random variable concept. If we  play the die, we get a value, which is number governed by a complex natural process which we can not predict. We represent the RV by:
+
+$$X$$
+
+If we play the die 1000 times and get the average of the values we get. it is called **Expected Value**.we write it as 
+$$[X] = (1+2+3+4+5+6)/6$$.
+
+if we draw 1000 times, we drawing a sample of size 1 from the population of 1,2,3,4,5,6. so mean of the each sample can be from 1 to 6. mean of sample means and the variance of the sample variance can be shown as below. Mean and variance of the sampling distribution are:
+```{r, echo=FALSE}
+mean(x)
+var(x)
+hist(x,main=paste( numoftimes," Sampling distribution when sample size is 1"),breaks=seq(1-.5,6+.5,1))
+```
+and the distribution has large variance.
+if we take 2 random values from the same population of 1 to 6. now our sample can be anything from (1,1)..to...(6,6).
+```{r}
+sampling_means<-c()
+for(i in 1:10000){
+  #roll the first die
+die1<-floor(runif(1,min=1,max=7))
+  #roll the second die
+die2<-floor(runif(1,min=1,max=7))
+sample_mean = sum(die1,die2)/2
+sampling_means<-c(sampling_means,sample_mean)
+}
+hist(sampling_means,main = "histogram of means of samples of size2")
+mean(sampling_means)
+var(sampling_means)
+```
+If we sample 3 dies. we get a more normal distribution with lesser variance and mean is very close to population mean.
+```{r}
+sampling_means<-c()
+for(i in 1:10000){
+  #roll the first die
+die1<-floor(runif(1,min=1,max=7))
+  #roll the second die
+die2<-floor(runif(1,min=1,max=7))
+
+die3<-floor(runif(1,min=1,max=7))
+
+sample_mean = sum(die1,die2,die3)/3
+sampling_means<-c(sampling_means,sample_mean)
+}
+hist(sampling_means,main = "histogram of means of samples of size3")
+mean(sampling_means)
+var(sampling_means)
+```
+
+
+
+
+
