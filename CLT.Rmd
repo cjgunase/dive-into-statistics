@@ -4,6 +4,7 @@ author: "Chathura"
 date: "October 18, 2016"
 output: html_document
 ---
+http://personality-project.org/r/distributions.html
 Central Limit Theorm may be the most important statistical concept. Briefly we can state that for any distribution with *finite mean and standard deviation*, samples taken from that population will tend towards a normal distribution around the mean of the population as sample size increases. Furthermore, as sample size increases, the variation of the sample means will decrease.
 
 Lets see this with an simulation. suppose we have one six sided die. Drawing a sample mean playing the die and observing the outcome. Obviously we will get one value for each time we draw. That means we are taking a sample from (1,2,3,4,5,6) one at a time. Each outcome is equally likely. so if we draw 1000 times seperatly. we can plot a histogram like this.
